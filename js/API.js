@@ -30,7 +30,7 @@ function getComments(token) {
 // }
 
 function postComment(name, comment, date, token) {
-    return fetch('https://webdev-hw-api.vercel.app/api/v2/alex-volo/comments', {
+    return fetch('https://webdev-hw-api.vercel.app/api/v2/Reha/comments', {
         method: "POST",
         headers: {
             authorization: token,

@@ -75,7 +75,7 @@ function addCommentListener(token) {
             const likeButton = e.currentTarget.querySelector('button.like-button');
             const deleteButton = e.currentTarget.querySelector('.delete-button');
 
-            if (e.target === likeButton) { like(index); return; }
+            if (e.target === likeButton) { like(index, currentToken); return; }
             if (e.target === deleteButton) { deleteComment(index, currentToken); return }
 
             replyComment(index);
@@ -98,7 +98,7 @@ function makeQuote(str) {
 
 
 function deleteComment(index, currentToken) {
-    fetch('https://webdev-hw-api.vercel.app/api/v2/alex-volo/comments/' + comments[index].id, {
+    fetch('https://webdev-hw-api.vercel.app/api/v2/Reha/comments/' + comments[index].id, {
         method: "DELETE",
         headers: {
             authorization: currentToken,
@@ -108,7 +108,7 @@ function deleteComment(index, currentToken) {
             if(response.status === 200){
                 comments.splice(index, 1);
                 renderComments(0, currentToken);
-                return response.json();
+                // return response.json();
             }
         })
         .catch(error => {
@@ -120,19 +120,53 @@ function deleteComment(index, currentToken) {
     
 };
 
-function like(index) {
+// function like(index) {
+//     const currentLikeButton = document.querySelectorAll('.like-button')[index];
+//     currentLikeButton.classList.add('loading-like')
+//     delay(2000)
+//         .then(() => {
+//             if (comments[index].isLiked) {
+//                 comments[index].isLiked = false;
+//                 comments[index].likes -= 1;
+//             } else {
+//                 comments[index].isLiked = true;
+//                 comments[index].likes += 1;
+//             }
+//             renderComments();
+//         })
+// };
+
+
+
+function like(index, currentToken) {
     const currentLikeButton = document.querySelectorAll('.like-button')[index];
-    currentLikeButton.classList.add('loading-like')
-    delay(2000)
-        .then(() => {
-            if (comments[index].isLiked) {
-                comments[index].isLiked = false;
-                comments[index].likes -= 1;
-            } else {
-                comments[index].isLiked = true;
-                comments[index].likes += 1;
+    const commentId = comments[index].id;
+    currentLikeButton.classList.add('loading-like');
+    fetch('https://webdev-hw-api.vercel.app/api/v2/Reha/comments/' +
+        commentId + '/toggle-like', {
+        method: "POST",
+        headers: {
+            authorization: currentToken,
+        },
+    })
+        .then((response) => {
+            if (response.status === 200) {
+                if (comments[index].isLiked) {
+                    comments[index].isLiked = false;
+                    comments[index].likes -= 1;
+                } else {
+                    comments[index].isLiked = true;
+                    comments[index].likes += 1;
+                }
+                renderComments(0, currentToken);
+                // getAndRenderComments(currentToken);
             }
-            renderComments();
+        })
+        .catch(error => {
+            console.warn(error);
+            if (error.message = 'Failed to fetch') {
+                alert('Нет соединения с интернетом')
+            }
         })
 };
 

@@ -19,7 +19,7 @@ function delay(interval = 300) {
 function getDate(date) {
 
     const newDate = new Date(date);
-    return format(newDate, 'dd.MM.yyyy hh:mm');
+    return format(newDate, 'dd/MM/yyyy hh:mm');
 }
 
 function validate(input, text) {

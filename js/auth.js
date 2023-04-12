@@ -1,6 +1,7 @@
 import { renderAddForm } from "./add-form.js";
 import { getAndRenderComments } from "./comments.js";
 import { validate } from "./service-functions.js";
+// import _ from 'lodash';
 
 export function renderAuthForm({ setToken, setUser }) {
     const container = document.querySelector('body>div.container');

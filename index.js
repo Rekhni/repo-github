@@ -4,8 +4,10 @@
 
 
 
-import {  renderComments, getAndRenderComments } from "./comments.js";
-import { renderAddForm } from "./add-form.js";
+import {  renderComments, getAndRenderComments } from "./js/comments.js";
+import { renderAddForm } from "./js/add-form.js";
+import { format } from "date-fns";
+
 // let token = null;
 let token = localStorage.getItem('currentToken');
 console.log(token);

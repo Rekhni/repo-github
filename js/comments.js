@@ -1,5 +1,6 @@
 import { delay, getDate, } from "./service-functions.js";
 import { getComments } from "./API.js"
+
 let comments = [];
 
 function getAndRenderComments(token) {
@@ -36,14 +37,16 @@ function renderComments(isFirstOpen = 0, token) {
     </li>`;
 
     } else {
+        
         commentsList.innerHTML = comments.reduce((result, comment, index) => {
             return result + `
     <li class="comment" data-id="${comment.id}" data-index="${index}">
     <div class="comment-header">
     <div>${comment.author.name}
     </div>
-    <div>${getDate(comment.date)}
-    </div >
+    <div>
+    ${getDate(comment.date)}
+    </div>
     </div >
     <div class="comment-body">
     <div class="comment-text">   
